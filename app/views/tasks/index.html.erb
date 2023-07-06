@@ -1,0 +1,53 @@
+<h1>タスク一覧</h1>
+
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>
+</ul> 
+<% if user_signed_in? %>
+<table>
+  <thead>
+	<% if @tasks.empty? %>
+	<tr>
+	<p>新しいタスクを追加してください</p>
+	</tr>
+	<% else %>
+    <tr>
+      <th>タスク名</th>
+    </tr>
+	<% end %>
+  </thead>
+  <tbody>
+
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>    
+				<td><%= link_to '編集', edit_task_path(task) ,class:"btn btn-primary" %></td> 
+				<td><%= button_to '削除', task_path(task), method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+
+</table>
+
+<%= link_to '追加', new_task_path ,class:"mt-3 btn btn-primary" %>
+
+<div class="mt-3">
+<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+</div>
+<% else %>
+<%= link_to "ログイン",  new_user_session_path, class: 'post' %>
+
+<% end %>
+
